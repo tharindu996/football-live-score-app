@@ -7,6 +7,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="{{ asset("css/styles.css") }}">
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
+    @vite(["resources/js/app.js"])
+
 </head>
 
 <body>
