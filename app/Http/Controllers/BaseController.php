@@ -11,7 +11,7 @@ class BaseController extends Controller
 {
     public function index()
     {
-        $ongoingFootballMatch = FootballMatch::whereNot('status', FootballMatchStatus::FINISHED)->first();      
+        $ongoingFootballMatch = FootballMatch::whereNot('status', FootballMatchStatus::FINISHED)->first();             
         return view('app.index', compact('ongoingFootballMatch'));
     }
 }

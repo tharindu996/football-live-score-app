@@ -14,15 +14,16 @@ use Illuminate\Queue\SerializesModels;
 class ScoreUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $teamA, $teamB;
+    public $teamA, $teamB, $status;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($teamA, $teamB)
+    public function __construct($teamA, $teamB, $status)
     {
         $this->teamA = $teamA;
-        $this->teamB = $teamB;       
+        $this->teamB = $teamB;
+        $this->status = session('status');
     }
 
     /**
@@ -31,9 +32,24 @@ class ScoreUpdated implements ShouldBroadcast
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
     public function broadcastOn(): array
-    {          
+    {
         return [
             new Channel('football.match'),
+        ];
+    }
+
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return [
+            'teamA' => $this->teamA,
+            'teamB' => $this->teamB,
+            'status' => $this->status, // Explicitly include status
         ];
     }
 }

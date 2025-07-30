@@ -37,6 +37,7 @@
 
     <link rel="stylesheet" href="{{ asset("js/bootstrap.bundle.min.js") }}">
     {{-- <link rel="stylesheet" href="{{ asset("js/bootstrap.min.js") }}"> --}}
+    @stack('scripts')
 </body>
 
 </html>

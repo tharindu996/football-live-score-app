@@ -19,18 +19,18 @@ window.Echo.channel('football.match')
 
         const goalCounts = {
             A: e.teamA,
-            B: e.teamB
+            B: e.teamB,
+            S: e.status,
         };
+
         localStorage.setItem('goalCounts', JSON.stringify(goalCounts));
         updateGoalCountUI(goalCounts);
     });
 
 function updateGoalCountUI(goalCounts) {
-    // document.getElementById('score').innerText =
-    //     `Team A ${goalCounts.A} - ${goalCounts.B} Team B`;
 
-    document.getElementById('home-score').innerText = goalCounts.A;
-    document.getElementById('away-score').innerText = goalCounts.B;
+    document.getElementById('home-score').innerText = goalCounts.A ?? 0;
+    document.getElementById('away-score').innerText = goalCounts.B ?? 0;
 }
 
 window.addEventListener('load', () => {

@@ -20,6 +20,14 @@ class FootballMatchController extends Controller
     {
         $inputs = $request->validated();       
         $footballMatch->update(['status' => $inputs['status'],]);
+        session(['status' => $inputs['status']]);
+
+        if($inputs['status'] === 'finished'){
+           session()->forget(['teamA','teamB','status']);
+        }
+
+        ScoreUpdated::dispatch(session('teamA'), session('teamB'),  $inputs['status']);
+
         return redirect()->back()->with(['success' => 'Football match status is updated']);
     }
 
@@ -31,6 +39,7 @@ class FootballMatchController extends Controller
 
         $teamA = session('teamA', $footballMatch->homeTeam->home_score);
         $teamB = session('teamB', $footballMatch->awayTeam->away_score);
+        $status = session('status', $footballMatch->status->value);
 
         if ($team->id === $footballMatch->homeTeam->id) {
             $teamA++;
@@ -39,9 +48,9 @@ class FootballMatchController extends Controller
             $teamB++;
             $footballMatch->update(['away_score' => $teamA]);
         }
-        session(['teamA' => $teamA, 'teamB' => $teamB]);
-
-        ScoreUpdated::dispatch($teamA, $teamB);
+        session(['teamA' => $teamA, 'teamB' => $teamB, 'status' => $footballMatch->status->value]);
+        
+        ScoreUpdated::dispatch($teamA, $teamB, $status);
 
         return redirect()->back()->with(['success' => 'Score updated successfully']);
     }
@@ -67,7 +76,8 @@ class FootballMatchController extends Controller
             return redirect()->back()->with(['errors' => 'Can not create a match when there is a ongoing match.']);
         }
 
-        FootballMatch::create([...$inputs, 'status' => FootballMatchStatus::ONGOING]);
+        $match = FootballMatch::create([...$inputs, 'status' => FootballMatchStatus::ONGOING]);
+       
         return redirect()->back()->with(['success' => 'Football match is created successfully']);
     }
 
