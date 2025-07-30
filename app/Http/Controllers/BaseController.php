@@ -11,8 +11,8 @@ class BaseController extends Controller
 {
     public function index()
     {
-        $ongoingFootballMatch = FootballMatch::where('status', FootballMatchStatus::ONGOING)->get();
-        
+        $ongoingFootballMatch = FootballMatch::where('status', FootballMatchStatus::ONGOING)->count();
+       
         return view('app.index', compact('ongoingFootballMatch'));
     }
 }
