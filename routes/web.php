@@ -2,10 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Events\ScoreUpdated;
+use App\Http\Controllers\BaseController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BaseController::class, 'index']);
 
 
 Route::post('/goal/{team}', function ($team) {
