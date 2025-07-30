@@ -21,7 +21,6 @@ class FootballMatchController extends Controller
         $footballMatch->update(['status' => $inputs['status'],]);
     }
 
-
     /**
      * update match score.
      */
@@ -64,7 +63,6 @@ class FootballMatchController extends Controller
         FootballMatch::create($inputs);
         return redirect()->back()->with(['success' => 'Football match is created successfully']);
     }
-
 
     /**
      * Remove the specified resource from storage.
