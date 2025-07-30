@@ -17,6 +17,7 @@ class FootballMatch extends Model
         'away_team_id',
         'home_score',
         'away_score',
+        'status',
     ];
 
      /**

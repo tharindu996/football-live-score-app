@@ -47,7 +47,9 @@ class FootballMatchController extends Controller
      */
     public function index()
     {
-        return view('app.football-matches.index');
+        $footballMatches = FootballMatch::orderBy('id', 'desc')->paginate(5);
+        $teams = Team::all();
+        return view('app.football-matches.index', compact('footballMatches', 'teams'));
     }
 
     /**
@@ -60,7 +62,8 @@ class FootballMatchController extends Controller
         if ($ongoingMatchCount > 0) {
             return redirect()->back()->with(['errors' => 'Can not create a match when there is a ongoing match.']);
         }
-        FootballMatch::create($inputs);
+        
+        FootballMatch::create([...$inputs, 'status' => FootballMatchStatus::ONGOING]);
         return redirect()->back()->with(['success' => 'Football match is created successfully']);
     }
 
