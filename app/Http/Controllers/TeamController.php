@@ -24,15 +24,7 @@ class TeamController extends Controller
         $inputs = $request->validated();
         Team::create($inputs);
         return redirect()->back()->with(['success' => 'Team added successfully']);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Team $team)
-    {
-        //
-    }
+    }    
 
     /**
      * Show the form for editing the specified resource.

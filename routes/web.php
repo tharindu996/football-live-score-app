@@ -7,7 +7,7 @@ use App\Http\Controllers\MatchController;
 use App\Http\Controllers\TeamController;
 
 Route::get('/', [BaseController::class, 'index']);
-Route::resource('teams', TeamController::class)->except('create');
+Route::resource('teams', TeamController::class)->except(['create', 'show']);
 
 // Route::post('/goal/{team}', function ($team) {
 //     // Simulate score increment (use session or DB in real app)
