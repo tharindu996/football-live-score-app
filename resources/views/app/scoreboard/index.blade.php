@@ -12,29 +12,55 @@
             <h2>
                 Scoreboard Form
             </h2>
-            <div class="d-flex">
-                <form class="row g-3 mt-3"
-                    action="{{ route("football-match.update-score", ["football_match" => $ongoingFootballMatch->id, "team" => $ongoingFootballMatch->homeTeam->id]) }}"
-                    method="post">
-                    @csrf
-                    @method("patch")
-
-                    <div class="col-6">
-                        <div class="fw-bold">{{ $ongoingFootballMatch->homeTeam->title }}</div>
-                        <button type="submit" class="btn btn-primary">Score</button>
-                    </div>
-                </form>
-
-                <form class="row g-3 mt-3"
-                    action="{{ route("football-match.update-score", ["football_match" => $ongoingFootballMatch->id, "team" => $ongoingFootballMatch->awayTeam->id]) }}"
-                    method="post">
-                    @csrf
-                    @method("patch")
-                    <div class="col-6">
-                        <div class="fw-bold">{{ $ongoingFootballMatch->awayTeam->title }}</div>
-                        <button type="submit" class="btn btn-primary">Score</button>
-                    </div>
-                </form>
+            <div class="table-wrapper">
+                <table class="table table">
+                    <tbody>
+                        <tr>
+                            <th>{{ $ongoingFootballMatch->homeTeam->title }}</th>
+                            <td>
+                                <form class=""
+                                    action="{{ route("football-match.update-score", ["football_match" => $ongoingFootballMatch->id, "team" => $ongoingFootballMatch->homeTeam->id]) }}"
+                                    method="post">
+                                    @csrf
+                                    @method("patch")
+                                    <button type="submit" class="btn btn-primary">Score</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ $ongoingFootballMatch->awayTeam->title }}</th>
+                            <td>
+                                <form class=""
+                                    action="{{ route("football-match.update-score", ["football_match" => $ongoingFootballMatch->id, "team" => $ongoingFootballMatch->awayTeam->id]) }}"
+                                    method="post">
+                                    @csrf
+                                    @method("patch")
+                                    <button type="submit" class="btn btn-primary">Score</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ $ongoingFootballMatch->awayTeam->title }}</th>
+                            <td>
+                                <form class=""
+                                    action="{{ route("football-match.update-status", ["football_match" => $ongoingFootballMatch]) }}"
+                                    method="post">
+                                    @csrf
+                                    @method("patch")
+                                    <select id="away-team" name="away_team_id" class="form-select">
+                                        <option selected disabled>Choose match status</option>
+                                        @forelse ($matchStatus as $value => $label)
+                                            <option value="{{ $value }}" {{ $ongoingFootballMatch->status->value === $value ? 'selected' : '' }}>{{ $label }}</option>
+                                        @empty
+                                            <option selected disabled>No match status found</option>
+                                        @endforelse
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Update {{ $ongoingFootballMatch->status  }}</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

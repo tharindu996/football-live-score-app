@@ -10,6 +10,7 @@ class ScoreboardController extends Controller
     public function index()
     {
         $ongoingFootballMatch = FootballMatch::where('status', FootballMatchStatus::ONGOING)->first();
-        return view('app.scoreboard.index', compact('ongoingFootballMatch'));
+        $matchStatus = FootballMatchStatus::toSelectArray();
+        return view('app.scoreboard.index', compact('ongoingFootballMatch', 'matchStatus'));
     }
 }
