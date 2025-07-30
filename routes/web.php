@@ -11,9 +11,7 @@ Route::get('/', function () {
 Route::post('/goal/{team}', function ($team) {
     // Simulate score increment (use session or DB in real app)
     $teamA = session('teamA', 0);
-    $teamB = session('teamB', 0);
-
-    info($team);
+    $teamB = session('teamB', 0);    
 
     if ($team === 'A') {
         $teamA++;

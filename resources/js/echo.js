@@ -15,41 +15,35 @@ window.Echo = new Echo({
 
 window.Echo.channel('football.match')
     .listen('ScoreUpdated', (e) => {
-        console.log('Score updated via Reverb:', e);
-        // Update your Blade UI elements
-        document.getElementById('score').innerText =
-            `Team A ${e.teamA} - ${e.teamB} Team B`;
+
+        const goalCounts = {
+            A: e.teamA,
+            B: e.teamB
+        };
+        localStorage.setItem('goalCounts', JSON.stringify(goalCounts));
+        updateGoalCountUI(goalCounts);
     });
 
+function updateGoalCountUI(goalCounts) {
 
-// const statusDiv = document.getElementById('status');
-// if (statusDiv) {
-//     window.Pusher.connection.bind('connected', () => {
-//         statusDiv.textContent = ''; // Clear any previous error
-//     });
+    document.getElementById('score').innerText =
+        `Team A ${goalCounts.A} - ${goalCounts.B} Team B`;
+}
 
-//     window.Pusher.connection.bind('error', (err) => {
-//         statusDiv.textContent = '⚠️ Connection error. Trying to reconnect...';
-//         console.error('WebSocket error:', err);
-//     });
+window.addEventListener('load', () => {
+    const cachedCounts = JSON.parse(localStorage.getItem('goalCounts')) || { A: 0, B: 0 };
+    updateGoalCountUI(cachedCounts);
+});
 
-//     window.Pusher.connection.bind('disconnected', () => {
-//         statusDiv.textContent = '❌ Disconnected from server.';
-//     });
-// }
-
-// Ensure the DOM is fully loaded before trying to access elements
 document.addEventListener('DOMContentLoaded', () => {
-    const connectionStatusElement = document.getElementById('connection-status'); // Assuming you have this div
-
+    const connectionStatusElement = document.getElementById('connection-status'); 
     if (window.Echo) {
-        // Listen for connection status changes
-        window.Echo.connector.pusher.connection.bind('state_change', function(states) {
+       
+        window.Echo.connector.pusher.connection.bind('state_change', function (states) {
             console.log('Echo connection state changed:', states.current);
             switch (states.current) {
                 case 'connected':
-                    connectionStatusElement.innerHTML = '<span style="color: green;">Connected</span>';
-                    // You might want to clear previous error messages here as well
+                    connectionStatusElement.innerHTML = '<span style="color: green;">Connected</span>';                    
                     break;
                 case 'connecting':
                     connectionStatusElement.innerHTML = '<span style="color: blue;">Connecting...</span>';
@@ -57,8 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'disconnected':
                     connectionStatusElement.innerHTML = '<span style="color: red;">❌ Disconnected from server. Trying to reconnect...</span>';
                     break;
-                case 'unavailable':
-                    // This often means a temporary network issue or server down, but Echo will retry
+                case 'unavailable':                  
                     connectionStatusElement.innerHTML = '<span style="color: orange;">⚠️ Connection unavailable. Retrying...</span>';
                     break;
                 case 'failed':
@@ -68,10 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     connectionStatusElement.innerHTML = `<span style="color: gray;">Status: ${states.current}</span>`;
                     break;
             }
-        });
-
-        // Your existing channel listening code
-        // window.Echo.channel('football.match').listen('ScoreUpdated', (e) => { /* ... */ });
+        });       
 
     } else {
         console.error('Laravel Echo (window.Echo) is not defined. Check your JavaScript compilation and loading order.');
