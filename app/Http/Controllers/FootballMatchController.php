@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\FootballMatchStatus;
 use App\Models\FootballMatch;
 use App\Http\Requests\StoreFootballMatchRequest;
 use App\Http\Requests\UpdateFootballMatchRequest;
@@ -22,10 +23,14 @@ class FootballMatchController extends Controller
     public function store(StoreFootballMatchRequest $request)
     {
         $inputs = $request->validated();
+        $ongoingMatchCount = FootballMatch::where('status', FootballMatchStatus::ONGOING)->count();
+        if($ongoingMatchCount > 0){
+            return redirect()->back()->with(['errors' => 'Can not create a match when there is a ongoing match.']);
+        }
         FootballMatch::create($inputs);
         return redirect()->back()->with(['success' => 'Football match is created successfully']);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
