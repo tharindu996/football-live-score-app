@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\FootballMatchStatus as EnumsFootballMatchStatus;
 use App\FootballMatchStatus;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,9 +28,9 @@ class FootballMatchFactory extends Factory
         return [
             'home_team_id' => $homeTeam->id,
             'away_team_id' => $awayTeam->id,
-            'home_score' => $this->faker->optional(0.8)->numberBetween(0, 10),
-            'away_score' => $this->faker->optional(0.8)->numberBetween(0, 10),
-            'status' => 'finished',
+            'home_score' => $this->faker->numberBetween(0, 10),
+            'away_score' => $this->faker->numberBetween(0, 10),
+            'status' => EnumsFootballMatchStatus::FINISHED,
         ];
     }
 }
