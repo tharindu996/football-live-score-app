@@ -13,3 +13,11 @@ body {
     flex-direction: column;
     /* For sticky footer */
 }
+
+.grid-container {
+    display: grid;
+    place-items: center;
+    /* Centers both horizontally and vertically */
+    height: 70vh;
+    /* Example: Centers within the viewport height */
+}
