@@ -18,7 +18,7 @@ class FootballMatchController extends Controller
      */
     public function updateStatus(UpdateFootballMatchStatusRequest $request, FootballMatch $footballMatch)
     {
-        $inputs = $request->validated();
+        $inputs = $request->validated();       
         $footballMatch->update(['status' => $inputs['status'],]);
     }
 
