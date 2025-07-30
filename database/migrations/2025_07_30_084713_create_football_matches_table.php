@@ -18,7 +18,12 @@ return new class extends Migration
             $table->foreignIdFor(Team::class, 'away_team_id');
             $table->integer('home_score')->default(0);
             $table->integer('away_score')->default(0);
-            $table->string('status');           
+            $table->enum('status', [
+                'scheduled',
+                'ongoing',
+                'halftime',
+                'finished',
+            ])->default('finished');
             $table->timestamps();
         });
     }
