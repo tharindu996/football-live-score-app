@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\FootballMatchStatus;
+use App\Models\FootballMatch;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -9,6 +11,8 @@ class BaseController extends Controller
 {
     public function index()
     {
-        return view('app.index');
+        $ongoingFootballMatch = FootballMatch::where('status', FootballMatchStatus::ONGOING)->get();
+        
+        return view('app.index', compact('ongoingFootballMatch'));
     }
 }
