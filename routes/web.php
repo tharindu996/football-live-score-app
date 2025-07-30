@@ -9,7 +9,7 @@ use App\Http\Controllers\TeamController;
 
 Route::get('/', [BaseController::class, 'index']);
 Route::resource('teams', TeamController::class)->except(['create', 'show']);
-Route::resource('football-matches', FootballMatchController::class)->except(['create']);
+Route::resource('football-matches', FootballMatchController::class)->only(['index', 'store', 'destroy']);
 
 // Route::post('/goal/{team}', function ($team) {
 //     // Simulate score increment (use session or DB in real app)

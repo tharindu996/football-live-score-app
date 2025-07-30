@@ -25,14 +25,7 @@ class FootballMatchController extends Controller
         FootballMatch::create($inputs);
         return redirect()->back()->with(['success' => 'Football match is created successfully']);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(FootballMatch $footballMatch)
-    {
-        //
-    }
+    
 
     /**
      * Remove the specified resource from storage.
