@@ -28,15 +28,15 @@ class FootballMatchController extends Controller
     public function updateScore(Request $request, FootballMatch $footballMatch, Team $team)
     {
 
-        $teamA = session('teamA', 0);
-        $teamB = session('teamB', 0);
+        $teamA = session('teamA', $footballMatch->homeTeam->home_score);
+        $teamB = session('teamB', $footballMatch->awayTeam->away_score);
 
         if ($team->id === $footballMatch->homeTeam->id) {
             $teamA++;
-            //$footballMatch->update(['home_score' => $teamA]);
+            $footballMatch->update(['home_score' => $teamA]);
         } else {
             $teamB++;
-            //$footballMatch->update(['away_score' => $teamA]);
+            $footballMatch->update(['away_score' => $teamA]);
         }
         session(['teamA' => $teamA, 'teamB' => $teamB]);
 
