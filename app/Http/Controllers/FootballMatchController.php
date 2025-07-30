@@ -20,6 +20,7 @@ class FootballMatchController extends Controller
     {
         $inputs = $request->validated();       
         $footballMatch->update(['status' => $inputs['status'],]);
+        return redirect()->back()->with(['success' => 'Football match status is updated']);
     }
 
     /**
@@ -61,7 +62,7 @@ class FootballMatchController extends Controller
     public function store(StoreFootballMatchRequest $request)
     {
         $inputs = $request->validated();
-        $ongoingMatchCount = FootballMatch::where('status', FootballMatchStatus::ONGOING)->count();
+        $ongoingMatchCount = FootballMatch::whereNot('status', FootballMatchStatus::FINISHED)->count();
         if ($ongoingMatchCount > 0) {
             return redirect()->back()->with(['errors' => 'Can not create a match when there is a ongoing match.']);
         }

@@ -9,6 +9,10 @@
     <div class="row justify-content-center">
 
         <div class="col-12 col-md-6">
+
+            @if ($ongoingFootballMatch)
+                
+           
             <h2>
                 Scoreboard Form
             </h2>
@@ -47,7 +51,7 @@
                                     method="post">
                                     @csrf
                                     @method("patch")
-                                    <select id="away-team" name="away_team_id" class="form-select">
+                                    <select id="status" name="status" class="form-select">
                                         <option selected disabled>Choose match status</option>
                                         @forelse ($matchStatus as $value => $label)
                                             <option value="{{ $value }}" {{ $ongoingFootballMatch->status->value === $value ? 'selected' : '' }}>{{ $label }}</option>
@@ -62,6 +66,11 @@
                     </tbody>
                 </table>
             </div>
+            @else
+                <div class="text-center my-4">
+                    <h4>No match is going on.</h4>
+                </div>
+             @endif
         </div>
     </div>
 @endsection
