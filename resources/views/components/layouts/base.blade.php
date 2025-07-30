@@ -14,7 +14,10 @@
         @include("components.includes.navbar")
     </header>
 
-    @yield("content")
+    <div class="main container">
+        @yield("content")
+    </div>
+
 
     @include("components.includes.footer")
 
