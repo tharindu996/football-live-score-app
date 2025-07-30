@@ -15,13 +15,26 @@
     </header>
 
     <div class="main container">
+        <div class="my-2">
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
         @yield("content")
     </div>
 
 
     @include("components.includes.footer")
 
-    <link rel="stylesheet" href="{{ asset("js/bootstrap.min.js") }}">
+    <link rel="stylesheet" href="{{ asset("js/bootstrap.bundle.min.js") }}">
+    {{-- <link rel="stylesheet" href="{{ asset("js/bootstrap.min.js") }}"> --}}
 </body>
 
 </html>
