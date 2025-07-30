@@ -25,8 +25,11 @@ window.Echo.channel('football.match')
     });
 
 function updateGoalCountUI(goalCounts) {
-    document.getElementById('score').innerText =
-        `Team A ${goalCounts.A} - ${goalCounts.B} Team B`;
+    // document.getElementById('score').innerText =
+    //     `Team A ${goalCounts.A} - ${goalCounts.B} Team B`;
+        
+    document.getElementById('homw-score').innerText =goalCounts.A;
+    document.getElementById('away-score').innerText =goalCounts.B;
 }
 
 window.addEventListener('load', () => {
