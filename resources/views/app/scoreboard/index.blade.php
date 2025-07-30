@@ -13,19 +13,23 @@
                 Scoreboard Form
             </h2>
             <div class="d-flex">
-                <form class="row g-3 mt-3" action="{{ route("football-match.update-score", ["football_match" => $ongoingFootballMatch->id ,"team" => $ongoingFootballMatch->homeTeam->id]) }}" method="post">
+                <form class="row g-3 mt-3"
+                    action="{{ route("football-match.update-score", ["football_match" => $ongoingFootballMatch->id, "team" => $ongoingFootballMatch->homeTeam->id]) }}"
+                    method="post">
                     @csrf
                     @method("patch")
-                    
+
                     <div class="col-6">
                         <div class="fw-bold">{{ $ongoingFootballMatch->homeTeam->title }}</div>
                         <button type="submit" class="btn btn-primary">Score</button>
                     </div>
                 </form>
 
-                <form class="row g-3 mt-3" action="" method="post">
+                <form class="row g-3 mt-3"
+                    action="{{ route("football-match.update-score", ["football_match" => $ongoingFootballMatch->id, "team" => $ongoingFootballMatch->awayTeam->id]) }}"
+                    method="post">
                     @csrf
-                    @method("post")
+                    @method("patch")
                     <div class="col-6">
                         <div class="fw-bold">{{ $ongoingFootballMatch->awayTeam->title }}</div>
                         <button type="submit" class="btn btn-primary">Score</button>
