@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('football-matches.index') }}">Football Matches</a>
                 </li>                
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('scoreboard.index') }}">Scoreboard</a>
+                </li>                
             </ul>
         </div>
     </div>

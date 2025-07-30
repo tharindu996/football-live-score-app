@@ -9,6 +9,7 @@ use App\Http\Requests\StoreFootballMatchRequest;
 use App\Http\Requests\UpdateFootballMatchRequest;
 use App\Http\Requests\UpdateFootballMatchStatusRequest;
 use App\Models\Team;
+use Illuminate\Http\Request;
 
 class FootballMatchController extends Controller
 {
@@ -24,21 +25,23 @@ class FootballMatchController extends Controller
     /**
      * update match score.
      */
-    public function updateScore(FootballMatch $footballMatch, Team $team)
+    public function updateScore(Request $request, FootballMatch $footballMatch, Team $team)
     {
-        $teamA = session('teamA', $footballMatch->home_score);
-        $teamB = session('teamB', $footballMatch->away_score);
+
+        $teamA = session('teamA', 0);
+        $teamB = session('teamB', 0);
 
         if ($team->id === $footballMatch->homeTeam->id) {
             $teamA++;
-            $footballMatch->update(['home_score' => $teamA]);
+            //$footballMatch->update(['home_score' => $teamA]);
         } else {
             $teamB++;
-            $footballMatch->update(['away_score' => $teamA]);
+            //$footballMatch->update(['away_score' => $teamA]);
         }
         session(['teamA' => $teamA, 'teamB' => $teamB]);
 
         ScoreUpdated::dispatch($teamA, $teamB);
+
         return redirect()->back()->with(['success' => 'Score updated successfully']);
     }
 

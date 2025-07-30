@@ -12,7 +12,7 @@
                     <p id="score" class="fw-bold">
                         {{ $ongoingFootballMatch->homeTeam->title }}  
                         <span id="home-score">0</span> 
-                        - <span class="away-score">0</span>
+                        - <span id="away-score">0</span>
                           {{ $ongoingFootballMatch->awayTeam->title }}</p>
                 </div>
             </div>

@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ScoreUpdated implements ShouldBroadcastNow
+class ScoreUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $teamA, $teamB;
@@ -22,7 +22,7 @@ class ScoreUpdated implements ShouldBroadcastNow
     public function __construct($teamA, $teamB)
     {
         $this->teamA = $teamA;
-        $this->teamB = $teamB;
+        $this->teamB = $teamB;       
     }
 
     /**
@@ -31,7 +31,7 @@ class ScoreUpdated implements ShouldBroadcastNow
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
     public function broadcastOn(): array
-    {        
+    {          
         return [
             new Channel('football.match'),
         ];

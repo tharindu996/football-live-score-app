@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Enums\FootballMatchStatus;
+use App\Models\FootballMatch;
 
 class ScoreboardController extends Controller
 {
     public function index()
     {
-        return view('app.scoreboard.index');
+        $ongoingFootballMatch = FootballMatch::where('status', FootballMatchStatus::ONGOING)->first();
+        return view('app.scoreboard.index', compact('ongoingFootballMatch'));
     }
 }
