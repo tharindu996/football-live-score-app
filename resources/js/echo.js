@@ -25,7 +25,6 @@ window.Echo.channel('football.match')
     });
 
 function updateGoalCountUI(goalCounts) {
-
     document.getElementById('score').innerText =
         `Team A ${goalCounts.A} - ${goalCounts.B} Team B`;
 }
