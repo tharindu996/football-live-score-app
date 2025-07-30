@@ -13,15 +13,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('app.teams.index');
     }
 
     /**
@@ -29,7 +21,9 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        //
+        $inputs = $request->validated();
+        Team::create($inputs);
+        return redirect()->back()->with(['success' => 'Team added successfully']);
     }
 
     /**
@@ -45,7 +39,7 @@ class TeamController extends Controller
      */
     public function edit(Team $team)
     {
-        //
+        return view('app.teams.edit', compact('team'));
     }
 
     /**
@@ -53,7 +47,9 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, Team $team)
     {
-        //
+        $inputs = $request->validated();        
+        $team->update($inputs);
+        return redirect()->back()->with(['success' => 'Team updated successfully']);
     }
 
     /**
@@ -61,6 +57,7 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
-        //
+        $team->delete();
+        return redirect()->back()->with(['success' => 'Team deleted successfully']);
     }
 }
