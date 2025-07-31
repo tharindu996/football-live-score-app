@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
+use Exception;
 
 class TeamController extends Controller
 {
@@ -22,17 +23,14 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        $inputs = $request->validated();
-        Team::create($inputs);
-        return redirect()->back()->with(['success' => 'Team added successfully']);
-    }    
+        try {
+            $inputs = $request->validated();
+            Team::create($inputs);
+            return redirect()->back()->with(['success' => 'Team added successfully']);
+        } catch (Exception $e) {
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Team $team)
-    {
-        return view('app.teams.edit', compact('team'));
+            return redirect()->back()->with(['error' => 'Failed to create a team. Please try again.']);
+        }
     }
 
     /**
@@ -40,9 +38,13 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, Team $team)
     {
-        $inputs = $request->validated();        
-        $team->update($inputs);
-        return redirect()->back()->with(['success' => 'Team updated successfully']);
+        try {
+            $inputs = $request->validated();
+            $team->update($inputs);
+            return redirect()->back()->with(['success' => 'Team updated successfully']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => 'Failed to update team. Please try again.']);
+        }
     }
 
     /**
@@ -50,7 +52,12 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
-        $team->delete();
-        return redirect()->back()->with(['success' => 'Team deleted successfully']);
+        try {
+            $team->delete();
+            return redirect()->back()->with(['success' => 'Team deleted successfully']);
+        } catch (Exception $e) {
+
+            return redirect()->back()->with(['error' => 'Failed to delete team. Please try again.']);
+        }
     }
 }
