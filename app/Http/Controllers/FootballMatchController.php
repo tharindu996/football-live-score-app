@@ -7,10 +7,11 @@ use App\Events\MatchFinished;
 use App\Events\ScoreUpdated;
 use App\Models\FootballMatch;
 use App\Http\Requests\StoreFootballMatchRequest;
-use App\Http\Requests\UpdateFootballMatchRequest;
 use App\Http\Requests\UpdateFootballMatchStatusRequest;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class FootballMatchController extends Controller
 {
@@ -19,18 +20,29 @@ class FootballMatchController extends Controller
      */
     public function updateStatus(UpdateFootballMatchStatusRequest $request, FootballMatch $footballMatch)
     {
-        $inputs = $request->validated();       
-        $footballMatch->update(['status' => $inputs['status'],]);
-        session(['status' => $inputs['status']]);
 
-        if($inputs['status'] === 'finished'){
-           session()->forget(['teamA','teamB','status']);
-           MatchFinished::dispatch($footballMatch->id);
+        try {
+            $inputs = $request->validated();
+            $footballMatch->update(['status' => $inputs['status'],]);
+            session(['status' => $inputs['status']]);
+
+            if ($inputs['status'] === 'finished') {
+                session()->forget(['teamA', 'teamB', 'status']);
+                MatchFinished::dispatch($footballMatch->id);
+            }
+
+            ScoreUpdated::dispatch(session('teamA'), session('teamB'));
+
+            return redirect()->back()->with(['success' => 'Football match status is updated']);
+        } catch (Exception $e) {
+            Log::error('Error updating football match status: ' . $e->getMessage(), [
+                'match_id' => $footballMatch->id,
+                'status_attempted' => $request->input('status'),
+                'exception' => $e
+            ]);
+
+            return redirect()->back()->with(['error' => 'Failed to update football match status. Please try again.']);
         }
-
-        ScoreUpdated::dispatch(session('teamA'), session('teamB'),  $inputs['status']);
-
-        return redirect()->back()->with(['success' => 'Football match status is updated']);
     }
 
     /**
@@ -38,23 +50,27 @@ class FootballMatchController extends Controller
      */
     public function updateScore(Request $request, FootballMatch $footballMatch, Team $team)
     {
+        try {
 
-        $teamA = session('teamA', $footballMatch->homeTeam->home_score);
-        $teamB = session('teamB', $footballMatch->awayTeam->away_score);
-       
+            $teamA = session('teamA', $footballMatch->homeTeam->home_score);
+            $teamB = session('teamB', $footballMatch->awayTeam->away_score);
 
-        if ($team->id === $footballMatch->homeTeam->id) {
-            $teamA++;
-            $footballMatch->update(['home_score' => $teamA]);
-        } else {
-            $teamB++;
-            $footballMatch->update(['away_score' => $teamB]);
+            if ($team->id === $footballMatch->homeTeam->id) {
+                $teamA++;
+                $footballMatch->update(['home_score' => $teamA]);
+            } else {
+                $teamB++;
+                $footballMatch->update(['away_score' => $teamB]);
+            }
+            session(['teamA' => $teamA, 'teamB' => $teamB]);
+
+            ScoreUpdated::dispatch($teamA, $teamB);
+
+            return redirect()->back()->with(['success' => 'Score updated successfully']);
+        } catch (Exception $e) {
+
+            return redirect()->back()->with(['error' => 'Failed to update football match score. Please try again.']);
         }
-        session(['teamA' => $teamA, 'teamB' => $teamB]);
-        
-        ScoreUpdated::dispatch($teamA, $teamB);
-
-        return redirect()->back()->with(['success' => 'Score updated successfully']);
     }
 
     /**
@@ -72,15 +88,19 @@ class FootballMatchController extends Controller
      */
     public function store(StoreFootballMatchRequest $request)
     {
-        $inputs = $request->validated();
-        $ongoingMatchCount = FootballMatch::whereNot('status', FootballMatchStatus::FINISHED)->count();
-        if ($ongoingMatchCount > 0) {
-            return redirect()->back()->with(['errors' => 'Can not create a match when there is a ongoing match.']);
-        }
+        try {
+            $inputs = $request->validated();
+            $ongoingMatchCount = FootballMatch::whereNot('status', FootballMatchStatus::FINISHED)->count();
+            if ($ongoingMatchCount > 0) {
+                return redirect()->back()->with(['errors' => 'Can not create a match when there is a ongoing match.']);
+            }
 
-        $match = FootballMatch::create([...$inputs, 'status' => FootballMatchStatus::ONGOING]);
-       
-        return redirect()->back()->with(['success' => 'Football match is created successfully']);
+            $match = FootballMatch::create([...$inputs, 'status' => FootballMatchStatus::ONGOING]);
+
+            return redirect()->back()->with(['success' => 'Football match is created successfully']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => 'Failed to create match. Please try again.']);
+        }
     }
 
     /**
@@ -88,7 +108,11 @@ class FootballMatchController extends Controller
      */
     public function destroy(FootballMatch $footballMatch)
     {
-        $footballMatch->delete();
-        return redirect()->back()->with(['success' => 'Football match is deleted successfully']);
+        try {
+            $footballMatch->delete();
+            return redirect()->back()->with(['success' => 'Football match is deleted successfully']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => 'Failed to delete match. Please try again.']);
+        }
     }
 }

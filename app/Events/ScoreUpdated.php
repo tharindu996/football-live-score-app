@@ -19,10 +19,11 @@ class ScoreUpdated implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($teamA, $teamB,)
+    public function __construct($teamA, $teamB)
     {
         $this->teamA = $teamA;
-        $this->teamB = $teamB;       
+        $this->teamB = $teamB;
+      
     }
 
     /**
@@ -47,7 +48,7 @@ class ScoreUpdated implements ShouldBroadcast
     {
         return [
             'teamA' => $this->teamA,
-            'teamB' => $this->teamB,           
+            'teamB' => $this->teamB,            
         ];
     }
 }

@@ -15,6 +15,8 @@ window.Echo = new Echo({
 
 window.Echo.channel('football.match')
     .listen('ScoreUpdated', (e) => {
+        console.log(e);
+        
         const goalCounts = {
             A: e.teamA,
             B: e.teamB,
