@@ -17,6 +17,7 @@
     </header>
 
     <div class="main container">
+        @include('sweetalert::alert')
         <div class="my-2">
             @if ($errors->any())
                 <div class="alert alert-danger">
