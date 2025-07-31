@@ -14,16 +14,15 @@ use Illuminate\Queue\SerializesModels;
 class ScoreUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $teamA, $teamB, $status;
+    public $teamA, $teamB;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($teamA, $teamB, $status)
+    public function __construct($teamA, $teamB,)
     {
         $this->teamA = $teamA;
-        $this->teamB = $teamB;
-        $this->status = session('status');
+        $this->teamB = $teamB;       
     }
 
     /**
@@ -48,8 +47,7 @@ class ScoreUpdated implements ShouldBroadcast
     {
         return [
             'teamA' => $this->teamA,
-            'teamB' => $this->teamB,
-            'status' => $this->status, // Explicitly include status
+            'teamB' => $this->teamB,           
         ];
     }
 }
