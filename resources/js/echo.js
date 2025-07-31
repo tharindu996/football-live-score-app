@@ -15,8 +15,6 @@ window.Echo = new Echo({
 
 window.Echo.channel('football.match')
     .listen('ScoreUpdated', (e) => {
-        console.log(e);
-
         const goalCounts = {
             A: e.teamA,
             B: e.teamB,
@@ -24,7 +22,7 @@ window.Echo.channel('football.match')
         };
 
         localStorage.setItem('goalCounts', JSON.stringify(goalCounts));
-        if (goalCounts.S === 'finished') {            
+        if (goalCounts.S === 'finished') {
             localStorage.clear();
             console.log("Local storage cleared!");
         }
@@ -34,20 +32,15 @@ window.Echo.channel('football.match')
 
 
 window.Echo.channel('football.match').listen('MatchFinished', (e) => {
-    console.log('Match Finished Event:', e);    
+    console.log('Match Finished Event:', e);
 
     document.getElementById('score').innerText = 'No matches found.';
     // Clear local storage for this match
-    localStorage.removeItem('goalCounts'); // Or clear specific match data if you store per match
-
-
-    // Crucially, stop listening to the channel
+    localStorage.removeItem('goalCounts'); 
+   
     window.Echo.leave('football.match');
     console.log('Left channel: football.match as match is finished.');
-
-    // Optionally, if the page is dedicated to this match, you might reload
-    // if a complete reset of the view is desired, but often not necessary.
-    // location.reload();
+    
 });
 
 function updateGoalCountUI(goalCounts) {
