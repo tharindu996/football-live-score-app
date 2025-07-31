@@ -18,7 +18,6 @@
 
     <div class="main container">
         <div class="my-2">
-
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -31,13 +30,10 @@
         </div>
         @yield("content")
     </div>
-
-
     @include("components.includes.footer")
 
     <link rel="stylesheet" href="{{ asset("js/bootstrap.bundle.min.js") }}">
-    {{-- <link rel="stylesheet" href="{{ asset("js/bootstrap.min.js") }}"> --}}
-    @stack('scripts')
+    @stack("scripts")
 </body>
 
 </html>
