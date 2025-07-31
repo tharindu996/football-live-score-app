@@ -34,20 +34,6 @@ class TeamController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTeamRequest $request, Team $team)
-    {
-        try {
-            $inputs = $request->validated();
-            $team->update($inputs);
-            return redirect()->back()->with(['success' => 'Team updated successfully']);
-        } catch (Exception $e) {
-            return redirect()->back()->with(['error' => 'Failed to update team. Please try again.']);
-        }
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Team $team)
