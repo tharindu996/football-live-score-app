@@ -54,8 +54,8 @@
                     <tr>
                         <td>{{ $key + $footballMatches->firstItem() }}</td>
                         <td>{{ $footballMatch->id }}</td>
-                        <td>{{ $footballMatch->homeTeam->title }}</td>
-                        <td>{{ $footballMatch->awayTeam->title }}</td>
+                        <td>{{ $footballMatch->homeTeam->title }} ({{ $footballMatch->home_score }})</td>
+                        <td>{{ $footballMatch->awayTeam->title }} ({{ $footballMatch->away_score }})</td>
                         <td>{{ $footballMatch->status }}</td>
                         <td>
                             <form action="{{ route("football-matches.destroy", $footballMatch) }}" method="post">
