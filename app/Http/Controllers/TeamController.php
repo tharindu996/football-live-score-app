@@ -26,9 +26,10 @@ class TeamController extends Controller
         try {
             $inputs = $request->validated();
             Team::create($inputs);
+            toast('Team added successfully','success');
             return redirect()->back()->with(['success' => 'Team added successfully']);
         } catch (Exception $e) {
-
+            toast('Failed to create a team. Please try again.','error');
             return redirect()->back()->with(['error' => 'Failed to create a team. Please try again.']);
         }
     }
@@ -40,6 +41,8 @@ class TeamController extends Controller
     {
         try {
             $team->delete();
+            toast('Team deleted successfully','success');
+
             return redirect()->back()->with(['success' => 'Team deleted successfully']);
         } catch (Exception $e) {
 

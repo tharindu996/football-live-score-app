@@ -32,14 +32,16 @@ class FootballMatchController extends Controller
             }
 
             ScoreUpdated::dispatch(session('teamA'), session('teamB'));
+            toast('Football match status is updated', 'success');
 
-            return redirect()->back()->with(['success' => 'Football match status is updated']);
+            return redirect()->back();
         } catch (Exception $e) {
             Log::error('Error updating football match status: ' . $e->getMessage(), [
                 'match_id' => $footballMatch->id,
                 'status_attempted' => $request->input('status'),
                 'exception' => $e
             ]);
+            toast('Failed to update football match status. Please try again', 'error');
 
             return redirect()->back()->with(['error' => 'Failed to update football match status. Please try again.']);
         }
@@ -65,9 +67,11 @@ class FootballMatchController extends Controller
             session(['teamA' => $teamA, 'teamB' => $teamB]);
 
             ScoreUpdated::dispatch($teamA, $teamB);
+            toast('Score updated successfully', 'success');
 
-            return redirect()->back()->with(['success' => 'Score updated successfully']);
+            return redirect()->back();
         } catch (Exception $e) {
+            toast('Failed to update football match score. Please try again.', 'error');
 
             return redirect()->back()->with(['error' => 'Failed to update football match score. Please try again.']);
         }
@@ -96,9 +100,12 @@ class FootballMatchController extends Controller
             }
 
             $match = FootballMatch::create([...$inputs, 'status' => FootballMatchStatus::ONGOING]);
+            toast('Football match is created successfully', 'success');
 
-            return redirect()->back()->with(['success' => 'Football match is created successfully']);
+            return redirect()->back();
         } catch (Exception $e) {
+            toast('Failed to create match. Please try again.', 'error');
+
             return redirect()->back()->with(['error' => 'Failed to create match. Please try again.']);
         }
     }
@@ -110,8 +117,11 @@ class FootballMatchController extends Controller
     {
         try {
             $footballMatch->delete();
-            return redirect()->back()->with(['success' => 'Football match is deleted successfully']);
+            toast('Football match is deleted successfully', 'success');
+
+            return redirect()->back();
         } catch (Exception $e) {
+            toast('Failed to delete match. Please try again.', 'error');
             return redirect()->back()->with(['error' => 'Failed to delete match. Please try again.']);
         }
     }
