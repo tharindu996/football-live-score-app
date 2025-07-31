@@ -24,10 +24,35 @@ window.Echo.channel('football.match')
         };
 
         localStorage.setItem('goalCounts', JSON.stringify(goalCounts));
+        if (goalCounts.S === 'finished') {            
+            localStorage.clear();
+            console.log("Local storage cleared!");
+        }
+
         updateGoalCountUI(goalCounts);
     });
 
+
+window.Echo.channel('football.match').listen('MatchFinished', (e) => {
+    console.log('Match Finished Event:', e);    
+
+    document.getElementById('score').innerText = 'No matches found.';
+    // Clear local storage for this match
+    localStorage.removeItem('goalCounts'); // Or clear specific match data if you store per match
+
+
+    // Crucially, stop listening to the channel
+    window.Echo.leave('football.match');
+    console.log('Left channel: football.match as match is finished.');
+
+    // Optionally, if the page is dedicated to this match, you might reload
+    // if a complete reset of the view is desired, but often not necessary.
+    // location.reload();
+});
+
 function updateGoalCountUI(goalCounts) {
+    // document.getElementById('score').innerText =
+    //     `Team A ${goalCounts.A} - ${goalCounts.B} Team B`;
 
     document.getElementById('home-score').innerText = goalCounts.A ?? 0;
     document.getElementById('away-score').innerText = goalCounts.B ?? 0;

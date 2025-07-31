@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\FootballMatchStatus;
+use App\Events\MatchFinished;
 use App\Events\ScoreUpdated;
 use App\Models\FootballMatch;
 use App\Http\Requests\StoreFootballMatchRequest;
@@ -24,6 +25,7 @@ class FootballMatchController extends Controller
 
         if($inputs['status'] === 'finished'){
            session()->forget(['teamA','teamB','status']);
+           MatchFinished::dispatch($footballMatch->id);
         }
 
         ScoreUpdated::dispatch(session('teamA'), session('teamB'),  $inputs['status']);
@@ -39,18 +41,18 @@ class FootballMatchController extends Controller
 
         $teamA = session('teamA', $footballMatch->homeTeam->home_score);
         $teamB = session('teamB', $footballMatch->awayTeam->away_score);
-        $status = session('status', $footballMatch->status->value);
+       
 
         if ($team->id === $footballMatch->homeTeam->id) {
             $teamA++;
             $footballMatch->update(['home_score' => $teamA]);
         } else {
             $teamB++;
-            $footballMatch->update(['away_score' => $teamA]);
+            $footballMatch->update(['away_score' => $teamB]);
         }
-        session(['teamA' => $teamA, 'teamB' => $teamB, 'status' => $footballMatch->status->value]);
+        session(['teamA' => $teamA, 'teamB' => $teamB]);
         
-        ScoreUpdated::dispatch($teamA, $teamB, $status);
+        ScoreUpdated::dispatch($teamA, $teamB);
 
         return redirect()->back()->with(['success' => 'Score updated successfully']);
     }
