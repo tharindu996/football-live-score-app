@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> @yield("title") | {{ env("APP_NAME") }}</title>
     <meta name="author" content="Tharindu Dissanayake">
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset("css/styles.css") }}">
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
     @vite(["resources/js/app.js"])
