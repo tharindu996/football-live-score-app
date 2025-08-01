@@ -41,14 +41,15 @@
                                     </form>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>{{ $ongoingFootballMatch->awayTeam->title }}</th>
-                                <td>
+                            <tr>                               
+                                <td colspan="2">
                                     <form id="match-stauts-update" class=""
                                         action="{{ route("football-match.update-status", ["football_match" => $ongoingFootballMatch]) }}"
                                         method="post">
                                         @csrf
                                         @method("patch")
+
+
                                         <select id="status" name="status" class="form-select">
                                             <option selected disabled>Choose match status</option>
                                             @forelse ($matchStatus as $value => $label)
@@ -59,9 +60,13 @@
                                                 <option selected disabled>No match status found</option>
                                             @endforelse
                                         </select>
-                                        <button type="submit" class="btn btn-primary">Update
+                                        <button type="submit" class="btn btn-primary mt-3">Update
                                             {{ $ongoingFootballMatch->status }}</button>
-                                    </form>
+
+
+
+
+
                                 </td>
                             </tr>
                         </tbody>
