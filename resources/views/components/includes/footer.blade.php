@@ -7,7 +7,7 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script> All rights reserved by:
-                    <a href="#" style="text-decoration: none;"><strong
+                    <a href="{{ route('index') }}" style="text-decoration: none;"><strong
                             class="text-warning">{{ env('APP_NAME') }}.com</strong></a>
                 </p>
             </div>
