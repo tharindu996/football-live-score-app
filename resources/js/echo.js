@@ -16,7 +16,7 @@ window.Echo = new Echo({
 window.Echo.channel('football.match')
     .listen('ScoreUpdated', (e) => {
         console.log(e);
-        
+
         const goalCounts = {
             A: e.teamA,
             B: e.teamB,
@@ -38,17 +38,14 @@ window.Echo.channel('football.match').listen('MatchFinished', (e) => {
 
     document.getElementById('score').innerText = 'No matches found.';
     // Clear local storage for this match
-    localStorage.removeItem('goalCounts'); 
-   
+    localStorage.removeItem('goalCounts');
+
     window.Echo.leave('football.match');
     console.log('Left channel: football.match as match is finished.');
-    
+
 });
 
 function updateGoalCountUI(goalCounts) {
-    // document.getElementById('score').innerText =
-    //     `Team A ${goalCounts.A} - ${goalCounts.B} Team B`;
-
     document.getElementById('home-score').innerText = goalCounts.A ?? 0;
     document.getElementById('away-score').innerText = goalCounts.B ?? 0;
 }
