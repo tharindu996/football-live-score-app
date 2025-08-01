@@ -1,61 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Football live score application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- This is a simple football live score application which displays live score of an ongoing football match built using laravel.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Live match score update
+2. Football team management
+3. Football match management
+4. Scoreboard(update match status, update match score)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technologies
+1. Laravel 12
+2. Laravel Reverb
+3. Sqlite 
+4. PHP 8.2
+5. NPM
+6. Composer
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation guide
 
-## Learning Laravel
+1. **Clone the repository:**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+git clone https://github.com/tharindu996/football-live-score-app.git
+cd football-live-score-app
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **Install PHP dependencies:**
+```bash
+composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Copy environment file:**
+ ```bash
+cp .env.example .env
+```
+4. **Generate application key:**
+```bash
+php artisan key:generate
+```
 
-## Laravel Sponsors
+5.  **Run database migrations:**
+```bash
+php artisan migrate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+6.  **Seed the database:**
+```bash
+php artisan db:seed
+```
 
-### Premium Partners
+7.  **Install Node.js dependencies:**
+```bash
+npm install 
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+8. **Start the Laravel development server:**
+```bash
+composer run dev
+```
 
-## Contributing
+9. **Run reverb server:**
+```bash
+php artisan reverb:start
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+10. **Run reverb server:**
+```bash
+php artisan reverb:start
+```
 
-## Code of Conduct
+11. **Run Laravel queue**
+```bash
+php artisan queue:work
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The application should now be accessible at `http://127.0.0.1:8000`.
 
-## Security Vulnerabilities
+## Steps
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Go to teams page and there you can add teams. From seeders teams are already added to database.
+
+2. Next go to football matches page and from there you can set a match. 
+When creating a new match it sets as an ongoing match. There can only be one ongoing match at one time.
+
+3. After setting a match go to the home page and you can see ongoing match detail.
+
+4. You can update match score and match status from scoreboard page.
+
+## Project stucture
+
+```
+/ ------------------------------------------------------- index
+/teams -------------------------------------------------- index,store,destroy 
+/football-matches --------------------------------------- index,store,destroy
+/scoreboard --------------------------------------------- index
+/football-matches/{football_match}/update-score/{team} -- patch
+/football-matches/{football_match}/update-status -------- patch
+```
+
+## Contact
+- My name is **Tharindu Dissanayake**. I am a experienced Laravel developer. If you have any questions, feel free to reach out to me:
+
+* **Email:** tharindudissanayake03@gmail.com
+* **GitHub:** https://github.com/tharindu996
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT License](LICENSE.md).
+
