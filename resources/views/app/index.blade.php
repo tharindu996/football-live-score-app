@@ -13,10 +13,10 @@
                 <div>
                     <h2>Live Score</h2>
                     <p id="score" class="fw-bold">
-                        {{ $ongoingFootballMatch->homeTeam->title }}  
+                        {{ $ongoingFootballMatch->homeTeam->title }}(H)
                         <span id="home-score">0</span> 
                         - <span id="away-score">0</span>
-                          {{ $ongoingFootballMatch->awayTeam->title }}</p>
+                          {{ $ongoingFootballMatch->awayTeam->title }}(A)</p>
                 </div>
             </div>
             @else
