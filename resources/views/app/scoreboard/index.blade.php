@@ -1,9 +1,7 @@
-{{-- <form action="{{ route("football-match.update-score", ["football_match" => 1,"team" => 1]) }}" method="post">
-    @csrf
-    <button>A</button>
-</form> --}}
-
 @extends("components.layouts.base")
+@section("title")
+    Scoreboard
+@endsection
 
 @section("content")
     <div class="row justify-content-center">
@@ -41,7 +39,7 @@
                                     </form>
                                 </td>
                             </tr>
-                            <tr>                               
+                            <tr>
                                 <td colspan="2">
                                     <form id="match-stauts-update" class=""
                                         action="{{ route("football-match.update-status", ["football_match" => $ongoingFootballMatch]) }}"

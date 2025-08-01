@@ -1,4 +1,7 @@
 @extends("components.layouts.base")
+@section("title")
+    Football matches
+@endsection
 @section("content")
     <div class="form-wrapper my-2 my-md-4">
         <div class="row justify-content-center">

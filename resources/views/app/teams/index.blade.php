@@ -1,5 +1,7 @@
 @extends("components.layouts.base")
-
+@section("title")
+    Teams
+@endsection
 @section("content")
     <div class="form-wrapper my-2 my-md-4">
 
@@ -14,7 +16,8 @@
                     @method("post")
                     <div class="col-12">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter team title">
+                        <input type="text" class="form-control" id="title" name="title"
+                            placeholder="Enter team title">
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">Register</button>
